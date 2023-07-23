@@ -26,8 +26,8 @@
         <ul class="navbar-nav bg-gradient-info sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
-                <i class="fas fa-users-cog"></i>
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="#">
+                <i class="fas fa-users-cog fa-lg"></i>
                 <div class="sidebar-brand-text mx-3">Bong Tailor</div>
             </a>
 
@@ -52,10 +52,10 @@
             <!-- Nav Item - Charts -->
             <li class="nav-item">
                 <a class="nav-link" href="pesanan.php">
-                    <i class="fas fa-fw fa-chart-area"></i>
-                    <span>Detail Pesanan</span></a>
+                    <i class="fas fa-shopping-cart fa-lg"></i>
+                    <span>Pesanan</span></a>
             </li>
-            <hr class="sidebar-divider my-0">
+
             <!-- Nav Item - Tables -->
             <li class="nav-item">
                 <a class="nav-link" href="pelanggan.php">
@@ -64,9 +64,9 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="stok_barang.php">
-                    <i class="fas fa-fw fa-table"></i>
-                    <span>Stok Barang</span></a>
+                <a class="nav-link" href="produksi.php">
+                    <i class="fas fa-table fa-lg"></i>
+                    <span>Produksi</span></a>
             </li>
 
             <!-- Divider -->
@@ -98,7 +98,7 @@
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
                                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Logout
+                                    Keluar
                                 </a>
                             </div>
                         </li>
@@ -111,7 +111,7 @@
                     <!-- Content Row -->
                     <div class="row">
                         <!-- Total Pesanan -->
-                        <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="col-xl-3 col-md-6 mb-4 mx-auto">
                             <div class="card border-left-info shadow h-100 py-2">
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
@@ -129,7 +129,7 @@
                         </div>
 
                         <!-- Status Selesai -->
-                        <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="col-xl-3 col-md-6 mb-4 mx-auto">
                             <div class="card border-left-success shadow h-100 py-2">
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
@@ -147,7 +147,7 @@
                         </div>
 
                         <!-- Status Belum Selesai -->
-                        <div class=" col-xl-3 col-md-6 mb-4">
+                        <div class=" col-xl-3 col-md-6 mb-4 mx-auto">
                             <div class="card border-left-danger shadow h-100 py-2">
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
@@ -174,10 +174,7 @@
                         <!-- Begin Page Content -->
                         <div class="container-fluid">
                             <!-- Page Heading -->
-                            <h1 class="h3 mb-2 text-gray-900">Pesanan</h1>
-
-                            <!-- <button type="button" class="btn btn-success btn-lg btn-block mb-2">Tambah Pesanan</button> -->
-
+                            <h1 class="h3 mb-2 text-gray-900">Tabel Pesanan</h1>
                             <!-- DataTales Example -->
                             <div class="card shadow mb-4">
                                 <div class="card-body">
@@ -185,32 +182,24 @@
                                         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                             <thead>
                                                 <tr>
+                                                    <th>No</th>
                                                     <th>Nama Pelanggan</th>
                                                     <th>Jenis Pesanan</th>
                                                     <th>Ukuran</th>
                                                     <th>Harga</th>
                                                     <th>Tanggal Pesanan</th>
                                                     <th>Status Pesanan</th>
-                                                    <!-- <th>Aksi</th> -->
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <tr>
+                                                    <td>1</td>
                                                     <td>Tiger Nixon</td>
                                                     <td>Kameja</td>
                                                     <td>S</td>
                                                     <td>50.000</td>
                                                     <td>2023/08/20</td>
                                                     <td>Selesai</td>
-                                                    <!-- <td>
-                                                        <a class="btn btn-warning" href=""><i
-                                                                class="fas fa-trash-alt"></i>
-                                                            Edit</a>
-                                                        &nbsp;
-                                                        <a class="btn btn-danger" href=""><i
-                                                                class="fas fa-trash-alt"></i>
-                                                            Hapus</a>
-                                                    </td> -->
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -252,16 +241,15 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Keluar?</h5>
                         <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">×</span>
                         </button>
                     </div>
-                    <div class="modal-body">Select "Logout" below if you are ready to end your current
-                        session.</div>
+                    <div class="modal-body">Apa kamu yakin ingin keluar?</div>
                     <div class="modal-footer">
-                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                        <a class="btn btn-primary" href="login.html">Logout</a>
+                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
+                        <a class="btn btn-danger" href="login.php">Keluar</a>
                     </div>
                 </div>
             </div>

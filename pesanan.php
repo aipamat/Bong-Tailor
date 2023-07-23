@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>Bong Tailor - Pelanggan</title>
+    <title>Bong Tailor - Pesanan</title>
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -50,15 +50,15 @@
             </div>
 
             <!-- Nav Item - Charts -->
-            <li class="nav-item">
-                <a class="nav-link" href="pesanan.php">
+            <li class="nav-item active">
+                <a class="nav-link" href="#">
                     <i class="fas fa-shopping-cart fa-lg"></i>
                     <span>Pesanan</span></a>
             </li>
 
             <!-- Nav Item - Tables -->
-            <li class="nav-item active">
-                <a class="nav-link" href="#">
+            <li class="nav-item">
+                <a class="nav-link" href="pelanggan.php">
                     <i class="fas fa-users fa-lg"></i>
                     <span>Pelanggan</span></a>
             </li>
@@ -106,12 +106,12 @@
                 </nav>
                 <!-- End of Topbar -->
 
-                <!-- Modal Tambah Pelanggan -->
-                <div class="modal fade" id="tambah_pelanggan" tabindex="-1" role="dialog" aria-labelledby="tambah_pelanggan" aria-hidden="true">
+                <!-- Modal Tambah Pesanan -->
+                <div class="modal fade" id="tambah_pesanan" tabindex="-1" role="dialog" aria-labelledby="tambah_pesanan" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="tambah_pelanggan">Tambah Pelanggan</h5>
+                                <h5 class="modal-title" id="tambah_pesanan">Tambah Pesanan</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
@@ -120,33 +120,67 @@
                                 <div class="modal-body">
                                     <div class="form-group">
                                         <label for="nama_pelanggan">Nama Pelanggan</label>
-                                        <input type="text" id="nama_pelanggan" name="nama_pelanggan" class="form-control">
+                                        <select class="form-control" id="nama_pelanggan">
+                                            <option>Arif</option>
+                                            <option>Naufal</option>
+                                            <option>Farhan</option>
+                                            <option>Fajar</option>
+                                            <option>Gitri</option>
+                                        </select>
                                     </div>
                                     <div class="form-group">
-                                        <label for="nomor_whatsapp">Nomor WhatsApp</label>
-                                        <input type="text" id="nomor_whatsapp" name="nomor_whatsapp" class="form-control">
+                                        <label for="jenis_pesanan">Jenis Pesanan</label>
+                                        <select class="form-control" id="jenis_pesanan">
+                                            <option>Kameja</option>
+                                            <option>Celana</option>
+                                        </select>
                                     </div>
                                     <div class="form-group">
-                                        <label for="alamat">Alamat</label>
-                                        <textarea class="form-control" id="alamat" name="alamat" rows="3"></textarea>
+                                        <label for="ukuran">Ukuran</label>
+                                        <select class="form-control" id="ukuran">
+                                            <option>S</option>
+                                            <option>M</option>
+                                            <option>L</option>
+                                            <option>XL</option>
+                                            <option>XXL</option>
+                                            <option>XXXL</option>
+                                        </select>
                                     </div>
+                                    <div class="form-group">
+                                        <label>Harga</label>
+                                        <input type="text" name="harga" class="form-control">
+                                    </div>
+
+                                    <div class="form-group"> <!-- Date input -->
+                                        <label class="control-label" for="tanggal_pesanan">Tanggal Pesanan</label>
+                                        <input class="form-control" id="tanggal_pesanan" name="tanggal_pesanan" placeholder="MM/DD/YYY" type="date" />
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="status_pesanan">Status Pesanan</label>
+                                        <select class="form-control" id="status_pesanan">
+                                            <option>Selesai</option>
+                                            <option>Belum Selesai</option>
+                                        </select>
+                                    </div>
+
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                                    <button type="submit" name="tambah_pelanggan" class="btn btn-success">Tambah</button>
+                                    <button type="submit" name="tambah_pesanan" class="btn btn-success">Tambah</button>
                                 </div>
                             </form>
                         </div>
                     </div>
                 </div>
-                <!-- /.Modal Tambah Pelanggan -->
+                <!-- /.Modal Tambah Pesanan -->
 
-                <!-- Modal Edit Pelanggan -->
-                <div class="modal fade" id="edit_pelanggan" tabindex="-1" role="dialog" aria-labelledby="edit_pelanggan" aria-hidden="true">
+                <!-- Modal Edit Pesanan -->
+                <div class="modal fade" id="edit_pesanan" tabindex="-1" role="dialog" aria-labelledby="edit_pesanan" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="edit_pelanggan">Edit Pelanggan</h5>
+                                <h5 class="modal-title" id="edit_pesanan">Edit Pesanan</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
@@ -155,28 +189,59 @@
                                 <div class="modal-body">
                                     <div class="form-group">
                                         <label for="nama_pelanggan">Nama Pelanggan</label>
-                                        <input type="text" id="nama_pelanggan" name="nama_pelanggan" class="form-control">
+                                        <select class="form-control" id="nama_pelanggan">
+                                            <option>Arif</option>
+                                            <option>Naufal</option>
+                                            <option>Farhan</option>
+                                            <option>Fajar</option>
+                                            <option>Gitri</option>
+                                        </select>
                                     </div>
                                     <div class="form-group">
-                                        <label for="nomor_whatsapp">Nomor WhatsApp</label>
-                                        <input type="text" id="nomor_whatsapp" name="nomor_whatsapp" class="form-control">
+                                        <label for="jenis_pesanan">Jenis Pesanan</label>
+                                        <select class="form-control" id="jenis_pesanan">
+                                            <option>Kameja</option>
+                                            <option>Celana</option>
+                                        </select>
                                     </div>
                                     <div class="form-group">
-                                        <label for="alamat">Alamat</label>
-                                        <textarea class="form-control" id="alamat" name="alamat" rows="3"></textarea>
+                                        <label for="ukuran">Ukuran</label>
+                                        <select class="form-control" id="ukuran">
+                                            <option>S</option>
+                                            <option>M</option>
+                                            <option>L</option>
+                                            <option>XL</option>
+                                            <option>XXL</option>
+                                            <option>XXXL</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Harga</label>
+                                        <input type="text" name="harga" class="form-control" placeholder="Harga">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label" for="tanggal_pesanan">Tanggal Pesanan</label>
+                                        <input class="form-control" id="tanggal_pesanan" name="tanggal_pesanan" placeholder="MM/DD/YYY" type="date" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="status_pesanan">Status Pesanan</label>
+                                        <select class="form-control" id="status_pesanan">
+                                            <option>Selesai</option>
+                                            <option>Belum Selesai</option>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                                    <button type="submit" name="edit_pelanggan" class="btn btn-success">Edit</button>
+                                    <button type="submit" name="edit_pesanan" class="btn btn-success">Edit</button>
                                 </div>
                             </form>
                         </div>
                     </div>
                 </div>
-                <!-- /.Modal Edit Pelanggan -->
+                <!-- Modal Edit Pesanan -->
 
-                <!-- Modal Hapus Pelanggan -->
+                <!-- Modal Hapus Pesanan -->
                 <div class="modal fade" id="delete_modal" tabindex="-1" role="dialog" aria-labelledby="delete_modal" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
@@ -189,12 +254,12 @@
                             <div class="modal-body">Apa kamu yakin ingin menghapus data ini?</div>
                             <div class="modal-footer">
                                 <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
-                                <a class="btn btn-danger" href="pelanggan.php">Ya</a>
+                                <a class="btn btn-danger" href="pesanan.php">Ya</a>
                             </div>
                         </div>
                     </div>
                 </div>
-                <!-- /.Modal Hapus Pelanggan -->
+
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
@@ -203,9 +268,9 @@
                         <!-- Begin Page Content -->
                         <div class="container-fluid">
                             <!-- Page Heading -->
-                            <h1 class="h3 mb-2 text-gray-900">Pelanggan</h1>
+                            <h1 class="h3 mb-2 text-gray-900">Pesanan</h1>
 
-                            <button type="button" class="btn btn-success btn-lg btn-block mb-2" data-toggle="modal" data-target="#tambah_pelanggan">Tambah Pelanggan</button>
+                            <button type="button" class="btn btn-success btn-lg btn-block mb-2" data-toggle="modal" data-target="#tambah_pesanan">Tambah Pesanan</button>
 
                             <!-- DataTales Example -->
                             <div class="card shadow mb-4">
@@ -216,8 +281,11 @@
                                                 <tr>
                                                     <th>No</th>
                                                     <th>Nama Pelanggan</th>
-                                                    <th>No Telepon</th>
-                                                    <th>Alamat</th>
+                                                    <th>Jenis Pesanan</th>
+                                                    <th>Ukuran</th>
+                                                    <th>Harga</th>
+                                                    <th>Tanggal Pesanan</th>
+                                                    <th>Status Pesanan</th>
                                                     <th>Aksi</th>
                                                 </tr>
                                             </thead>
@@ -225,10 +293,13 @@
                                                 <tr>
                                                     <td>1</td>
                                                     <td>Tiger Nixon</td>
-                                                    <td>0857485*****</td>
-                                                    <td>Jalan Otista GG. Kebon Karet No. 29/5-C</td>
+                                                    <td>Kameja</td>
+                                                    <td>S</td>
+                                                    <td>50.000</td>
+                                                    <td>2023/08/20</td>
+                                                    <td>Selesai</td>
                                                     <td>
-                                                        <a class="btn btn-warning" data-toggle="modal" data-target="#edit_pelanggan" href=""><i class="fas fa-edit fa-sm"></i></a>
+                                                        <a class="btn btn-warning" data-toggle="modal" data-target="#edit_pesanan" href=""><i class="fas fa-edit fa-sm"></i></a>
                                                         &nbsp;
                                                         <a class="btn btn-danger" data-toggle="modal" data-target="#delete_modal" href=""><i class="fas fa-trash fa-sm"></i></a>
                                                     </td>
