@@ -12,6 +12,8 @@
     <?php
         include_once('head/assets.php');
         include_once('head/koneksi.php');
+        include_once('head/session.php');
+        if(!$_SESSION['logged_in']) header('Location: login.php');
     ?>
 </head>
 

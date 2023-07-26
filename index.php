@@ -12,6 +12,8 @@
     <?php
         include_once('head/assets.php');
         include_once('head/koneksi.php');
+        include_once('head/session.php');
+        if(!$_SESSION['logged_in']) header('Location: login.php');
     ?>
 
 </head>
@@ -248,7 +250,7 @@
                     <div class="modal-body">Apa kamu yakin ingin keluar?</div>
                     <div class="modal-footer">
                         <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
-                        <a class="btn btn-danger" href="login.php">Keluar</a>
+                        <a class="btn btn-danger" href="backend/logoutBackend.php">Keluar</a>
                     </div>
                 </div>
             </div>
