@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>Bong Tailor - Produksi</title>
+    <title>Bong Tailor - Riwayat Pesanan</title>
 
     <?php
         include_once('head/assets.php');
@@ -66,7 +66,7 @@
             <li class="nav-item active">
                 <a class="nav-link" href="#">
                     <i class="fas fa-table fa-lg"></i>
-                    <span>Produksi</span></a>
+                    <span>Riwayat Pesanan</span></a>
             </li>
 
             <!-- Divider -->
@@ -111,7 +111,7 @@
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="tambah_produksi">Tambah Produksi</h5>
+                                <h5 class="modal-title" id="tambah_produksi">Tambah Riwayat Pesanan</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
@@ -251,9 +251,9 @@
                         <!-- Begin Page Content -->
                         <div class="container-fluid">
                             <!-- Page Heading -->
-                            <h1 class="h3 mb-2 text-gray-900">Produksi</h1>
+                            <h1 class="h3 mb-2 text-gray-900">Riwayat Pesanan</h1>
 
-                            <button type="button" class="btn btn-success btn-lg btn-block mb-2" data-toggle="modal" data-target="#tambah_produksi">Tambah Produksi</button>
+                            <button type="button" class="btn btn-success btn-lg btn-block mb-2" data-toggle="modal" data-target="#tambah_produksi">Tambah Riwayat Pesanan</button>
 
                             <!-- DataTales Example -->
                             <div class="card shadow mb-4">

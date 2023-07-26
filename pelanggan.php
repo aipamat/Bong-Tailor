@@ -66,7 +66,7 @@
             <li class="nav-item">
                 <a class="nav-link" href="produksi.php">
                     <i class="fas fa-table fa-lg"></i>
-                    <span>Produksi</span></a>
+                    <span>Riwayat Pesanan</span></a>
             </li>
 
             <!-- Divider -->
@@ -116,7 +116,7 @@
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
-                            <form action="" method="">
+                            <form action="backend/pelanggan/tambahpelangganBackend.php" method="post">
                                 <div class="modal-body">
                                     <div class="form-group">
                                         <label for="nama_pelanggan">Nama Pelanggan</label>
@@ -151,7 +151,7 @@
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
-                            <form action="" method="">
+                            <form action="" method="post">
                                 <div class="modal-body">
                                     <div class="form-group">
                                         <label for="nama_pelanggan">Nama Pelanggan</label>
@@ -175,26 +175,6 @@
                     </div>
                 </div>
                 <!-- /.Modal Edit Pelanggan -->
-
-                <!-- Modal Hapus Pelanggan -->
-                <div class="modal fade" id="delete_modal" tabindex="-1" role="dialog" aria-labelledby="delete_modal" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="delete_modal">Hapus?</h5>
-                                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">×</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">Apa kamu yakin ingin menghapus data ini?</div>
-                            <div class="modal-footer">
-                                <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
-                                <a class="btn btn-danger" href="pelanggan.php">Ya</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- /.Modal Hapus Pelanggan -->
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
@@ -222,17 +202,31 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
+
+                                            <?php
+                                                $query = mysqli_query($koneksi, "SELECT * FROM pelanggan");
+                                                $i = 1;
+                                                
+                                                foreach($query as $pelanggan) :
+                                            ?>
+
                                                 <tr>
-                                                    <td>1</td>
-                                                    <td>Tiger Nixon</td>
-                                                    <td>0857485*****</td>
-                                                    <td>Jalan Otista GG. Kebon Karet No. 29/5-C</td>
+                                                    <td> <?php echo($i); ?> </td>
+                                                    <td> <?php echo($pelanggan['nama_pelanggan']); ?> </td>
+                                                    <td> <?php echo($pelanggan['no_telepon']); ?> </td>
+                                                    <td> <?php echo($pelanggan['alamat']); ?> </td>
                                                     <td>
                                                         <a class="btn btn-warning" data-toggle="modal" data-target="#edit_pelanggan" href=""><i class="fas fa-edit fa-sm"></i></a>
                                                         &nbsp;
                                                         <a class="btn btn-danger" data-toggle="modal" data-target="#delete_modal" href=""><i class="fas fa-trash fa-sm"></i></a>
                                                     </td>
                                                 </tr>
+
+                                            <?php
+                                                $i++;
+                                                endforeach;
+                                            ?>
+
                                             </tbody>
                                         </table>
                                     </div>
@@ -244,6 +238,26 @@
                     </div>
                 </div>
                 <!-- End of Main Content -->
+
+                <!-- Modal Hapus Pelanggan -->
+                <div class="modal fade" id="delete_modal" tabindex="-1" role="dialog" aria-labelledby="delete_modal" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="delete_modal">Hapus?</h5>
+                                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">Apa kamu yakin ingin menghapus data ini?</div>
+                            <div class="modal-footer">
+                                <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
+                                <a class="btn btn-danger" href="pelanggan.php">Ya</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.Modal Hapus Pelanggan -->
 
                 <!-- Footer -->
                 <footer class="sticky-footer bg-white">

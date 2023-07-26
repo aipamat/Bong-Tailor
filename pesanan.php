@@ -66,7 +66,7 @@
             <li class="nav-item">
                 <a class="nav-link" href="produksi.php">
                     <i class="fas fa-table fa-lg"></i>
-                    <span>Produksi</span></a>
+                    <span>Riwayat Pesanan</span></a>
             </li>
 
             <!-- Divider -->
