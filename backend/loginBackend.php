@@ -10,7 +10,7 @@
     $cek = mysqli_num_rows($query);
 
     if ($cek) {
-        $query = mysqli_fetch_array($query);
+        $query = mysqli_fetch_assoc($query);
 
         session_regenerate_id();
         $_SESSION['logged_in'] = true;

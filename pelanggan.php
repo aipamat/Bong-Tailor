@@ -146,7 +146,7 @@
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="edit_pelanggan">Edit Pelanggan</h5>
+                                <h5 class="modal-title">Edit Pelanggan</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
@@ -175,6 +175,26 @@
                     </div>
                 </div>
                 <!-- /.Modal Edit Pelanggan -->
+
+                <!-- Modal Hapus Pelanggan -->
+                <div class="modal fade" id="delete_pelanggan" tabindex="-1" role="dialog" aria-labelledby="delete_pelanggan" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="delete_pelanggan">Hapus?</h5>
+                                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">Apa kamu yakin ingin menghapus data ini?</div>
+                            <div class="modal-footer">
+                                <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
+                                <a class="btn btn-danger" href="pelanggan.php">Ya</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.Modal Hapus Pelanggan -->
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
@@ -206,19 +226,18 @@
                                             <?php
                                                 $query = mysqli_query($koneksi, "SELECT * FROM pelanggan");
                                                 $i = 1;
-                                                
                                                 foreach($query as $pelanggan) :
                                             ?>
 
                                                 <tr>
-                                                    <td> <?php echo($i); ?> </td>
-                                                    <td> <?php echo($pelanggan['nama_pelanggan']); ?> </td>
-                                                    <td> <?php echo($pelanggan['no_telepon']); ?> </td>
-                                                    <td> <?php echo($pelanggan['alamat']); ?> </td>
+                                                    <td> <?php echo $i; ?> </td>
+                                                    <td> <?php echo $pelanggan['nama_pelanggan']; ?> </td>
+                                                    <td> <?php echo $pelanggan['no_telepon']; ?> </td>
+                                                    <td> <?php echo $pelanggan['alamat']; ?> </td>
                                                     <td>
-                                                        <a class="btn btn-warning" data-toggle="modal" data-target="#edit_pelanggan" href=""><i class="fas fa-edit fa-sm"></i></a>
+                                                        <a class="btn btn-warning" id="edit_button" data-toggle="modal" data-target="#edit_pelanggan" data-id="<?php echo $pelanggan['id_pelanggan'] ?>"><i class="fas fa-edit fa-sm"></i></a>
                                                         &nbsp;
-                                                        <a class="btn btn-danger" data-toggle="modal" data-target="#delete_modal" href=""><i class="fas fa-trash fa-sm"></i></a>
+                                                        <a class="btn btn-danger" id="delete_button" data-toggle="modal" data-target="#delete_pelanggan" data-id="<?php echo $pelanggan['id_pelanggan'] ?>"><i class="fas fa-trash fa-sm"></i></a>
                                                     </td>
                                                 </tr>
 
@@ -238,26 +257,6 @@
                     </div>
                 </div>
                 <!-- End of Main Content -->
-
-                <!-- Modal Hapus Pelanggan -->
-                <div class="modal fade" id="delete_modal" tabindex="-1" role="dialog" aria-labelledby="delete_modal" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="delete_modal">Hapus?</h5>
-                                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">×</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">Apa kamu yakin ingin menghapus data ini?</div>
-                            <div class="modal-footer">
-                                <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
-                                <a class="btn btn-danger" href="pelanggan.php">Ya</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- /.Modal Hapus Pelanggan -->
 
                 <!-- Footer -->
                 <footer class="sticky-footer bg-white">
@@ -293,29 +292,38 @@
                     <div class="modal-body">Apa kamu yakin ingin keluar?</div>
                     <div class="modal-footer">
                         <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
-                        <a class="btn btn-danger" href="login.php">Keluar</a>
+                        <a class="btn btn-danger" href="backend/logoutBackend.php">Keluar</a>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Bootstrap core JavaScript-->
-        <script src="vendor/jquery/jquery.min.js"></script>
-        <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <!-- Script Edit & Delete Modal -->
+        <script type="text/javascript">
+            $('#edit_button').click(function(e) {
+                id = $(this).attr('data-id');
+                $.ajax({
+                    type: "POST",
+                    url: "modals/pelangganEdit.php",
+                    data: {id:id},
+                    success: function(response) {
+                        $('#edit_pelanggan').html(response);
+                    }
+                });
+            });
+            $('#delete_button').click(function(e) {
+                id = $(this).attr('data-id');
+                $.ajax({
+                    type: "POST",
+                    url: "modals/pelangganHapus.php",
+                    data: {id:id},
+                    success: function(response) {
+                        $('#delete_pelanggan').html(response);
+                    }
+                });
+            });
+        </script>
 
-        <!-- Core plugin JavaScript-->
-        <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-
-        <!-- Custom scripts for all pages-->
-        <script src="js/sb-admin-2.min.js"></script>
-
-        <!-- Page level plugins -->
-        <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
-
-        <!-- Page level custom scripts -->
-        <script src="js/demo/datatables-demo.js"></script>
-        <script src="vendor/datatables/jquery.dataTables.min.js"></script>
-        <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
 </body>
 
 </html>
