@@ -1,3 +1,5 @@
+<? if(!$_SESSION['logged_in']) header('Location: ../login.php'); ?>
+
 <div class="modal-dialog" role="document">
     <div class="modal-content">
         <div class="modal-header">

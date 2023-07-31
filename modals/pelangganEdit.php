@@ -1,4 +1,7 @@
-<?php include_once('../head/koneksi.php'); ?>
+<?php
+    include_once('../head/koneksi.php');
+    if(!$_SESSION['logged_in']) header('Location: ../login.php');
+?>
 
 <div class="modal-dialog" role="document">
     <div class="modal-content">
