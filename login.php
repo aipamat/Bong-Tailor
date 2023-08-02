@@ -47,7 +47,7 @@
                                         </div>
                                         <button type="submit" class="btn btn-small btn-info btn-user btn-block">
                                             Masuk
-                                        </a>
+                                        </button>
                                     </form>
                                     <hr>
                                 </div>

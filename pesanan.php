@@ -116,51 +116,66 @@
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
-                            <form action="" method="">
+                            <form action="backend/pesanan/tambahpesananBackend.php" method="post">
                                 <div class="modal-body">
                                     <div class="form-group">
                                         <label for="nama_pelanggan">Nama Pelanggan</label>
-                                        <select class="form-control" id="nama_pelanggan">
-                                            <option>Arif</option>
-                                            <option>Naufal</option>
-                                            <option>Farhan</option>
-                                            <option>Fajar</option>
-                                            <option>Gitri</option>
+                                        <select class="form-control" id="nama_pelanggan" name="pelanggan">
+                                            <?php
+                                                $query = mysqli_query($koneksi, "SELECT * FROM pelanggan");
+                                                foreach($query as $pelanggan) :
+                                            ?>
+                                            <option value="<?php echo $pelanggan['id_pelanggan'] ?>"><?php echo $pelanggan['nama_pelanggan']; ?></option>
+                                            <?php endforeach; ?>
                                         </select>
                                     </div>
+
                                     <div class="form-group">
                                         <label for="jenis_pesanan">Jenis Pesanan</label>
-                                        <select class="form-control" id="jenis_pesanan">
-                                            <option>Kameja</option>
-                                            <option>Celana</option>
+                                        <select class="form-control" id="jenis_pesanan" name="jenis_pesanan">
+                                            <option value="Kemeja">Kemeja</option>
+                                            <option value="Celana">Celana</option>
                                         </select>
                                     </div>
+
                                     <div class="form-group">
                                         <label for="ukuran">Ukuran</label>
-                                        <select class="form-control" id="ukuran">
-                                            <option>S</option>
-                                            <option>M</option>
-                                            <option>L</option>
-                                            <option>XL</option>
-                                            <option>XXL</option>
-                                            <option>XXXL</option>
+                                        <select class="form-control" id="ukuran" name="ukuran">
+                                            <option value="S">S</option>
+                                            <option value="M">M</option>
+                                            <option value="L">L</option>
+                                            <option value="XL">XL</option>
+                                            <option value="XXL">XXL</option>
+                                            <option value="XXXL">XXXL</option>
                                         </select>
                                     </div>
+
                                     <div class="form-group">
                                         <label>Harga</label>
-                                        <input type="text" name="harga" class="form-control">
+                                        <input type="number" name="harga" class="form-control">
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label>Jumlah</label>
+                                        <input type="number" name="jumlah" class="form-control">
                                     </div>
 
                                     <div class="form-group"> <!-- Date input -->
                                         <label class="control-label" for="tanggal_pesanan">Tanggal Pesanan</label>
-                                        <input class="form-control" id="tanggal_pesanan" name="tanggal_pesanan" placeholder="MM/DD/YYY" type="date" />
+                                        <input class="form-control" id="tanggal_pesanan" name="tanggal_pesanan" placeholder="MM/DD/YYYY" type="date" />
+                                    </div>
+
+                                    <div class="form-group"> <!-- Date input -->
+                                        <label class="control-label" for="tanggal_selesai">Tanggal Selesai</label>
+                                        <input class="form-control" id="tanggal_selesai" name="tanggal_selesai" placeholder="MM/DD/YYYY" type="date" />
                                     </div>
 
                                     <div class="form-group">
                                         <label for="status_pesanan">Status Pesanan</label>
-                                        <select class="form-control" id="status_pesanan">
-                                            <option>Selesai</option>
-                                            <option>Belum Selesai</option>
+                                        <select class="form-control" id="status_pesanan" name="status_pesanan">
+                                            <option value="Belum">Belum Selesai</option>
+                                            <option value="Proses">Proses</option>
+                                            <option value="Selesai">Selesai</option>
                                         </select>
                                     </div>
 
@@ -290,6 +305,12 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
+                                                <?php
+                                                    $query = mysqli_query($koneksi, "SELECT * FROM pesanan");
+                                                    $i = 1;
+                                                    foreach($query as $pesanan) :
+                                                ?>
+
                                                 <tr>
                                                     <td>1</td>
                                                     <td>Tiger Nixon</td>
@@ -304,6 +325,11 @@
                                                         <a class="btn btn-danger" data-toggle="modal" data-target="#delete_modal" href=""><i class="fas fa-trash fa-sm"></i></a>
                                                     </td>
                                                 </tr>
+
+                                                <?php
+                                                    $i++;
+                                                    endforeach;
+                                                ?>
                                             </tbody>
                                         </table>
                                     </div>
