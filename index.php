@@ -83,8 +83,8 @@
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
 
-            <!-- Main Content -->
-            <div id="content">
+           <!-- Main Content -->
+           <div id="content">
                 <!-- Topbar -->
                 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
                     <!-- Topbar Navbar -->
@@ -106,7 +106,7 @@
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                                <a class="dropdown-item" href="" data-toggle="modal" data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Keluar
                                 </a>
@@ -196,26 +196,51 @@
                                                     <th>Nama Pelanggan</th>
                                                     <th>Jenis Pesanan</th>
                                                     <th>Ukuran</th>
-                                                    <th>Harga</th>
+                                                    <th>Jumlah</th>
+                                                    <th>Harga Total</th>
                                                     <th>Tanggal Pesanan</th>
                                                     <th>Status Pesanan</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
+                                                <?php
+                                                    $query = mysqli_query($koneksi,
+                                                        "SELECT pesanan.*, pelanggan.nama_pelanggan
+                                                        FROM pesanan
+                                                        INNER JOIN pelanggan
+                                                        ON pesanan.id_pelanggan = pelanggan.id_pelanggan");
+                                                    $i = 1;
+                                                    foreach($query as $pesanan) :
+                                                ?>
+
                                                 <tr>
-                                                    <td>1</td>
-                                                    <td>Tiger Nixon</td>
-                                                    <td>Kameja</td>
-                                                    <td>S</td>
-                                                    <td>50.000</td>
-                                                    <td>2023/08/20</td>
-                                                    <td>Selesai</td>
+                                                    <td><?php echo $i ?></td>
+                                                    <td><?php echo $pesanan['nama_pelanggan']; ?></td>
+                                                    <td><?php echo $pesanan['jenis_pesanan']; ?></td>
+                                                    <td><?php echo $pesanan['ukuran']; ?></td>
+                                                    <td><?php echo $pesanan['jumlah']; ?></td>
+                                                    <td><?php
+                                                        $harga_total = $pesanan['harga_total'];
+                                                        echo "Rp ".number_format($harga_total, 0, ",", ".");
+                                                    ?></td>
+                                                    <td><?php
+                                                        $tanggalPemesanan = strtotime($pesanan['tanggal_pesanan']);
+                                                        echo date('m/d/Y', $tanggalPemesanan);
+                                                    ?></td>
+                                                    <td><?php echo $pesanan['status_pemesanan']; ?></td>
                                                 </tr>
+
+                                                <?php
+                                                    $i++;
+                                                    endforeach;
+                                                ?>
                                             </tbody>
                                         </table>
                                     </div>
                                 </div>
                             </div>
+
+                        </div>
 
                         </div>
                         <!-- /.container-fluid -->
@@ -265,23 +290,6 @@
             </div>
         </div>
 
-        <!-- Bootstrap core JavaScript-->
-        <script src="vendor/jquery/jquery.min.js"></script>
-        <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-        <!-- Core plugin JavaScript-->
-        <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-
-        <!-- Custom scripts for all pages-->
-        <script src="js/sb-admin-2.min.js"></script>
-
-        <!-- Page level plugins -->
-        <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
-
-        <!-- Page level custom scripts -->
-        <script src="js/demo/datatables-demo.js"></script>
-        <script src="vendor/datatables/jquery.dataTables.min.js"></script>
-        <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
 </body>
 
 </html>
