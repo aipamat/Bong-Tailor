@@ -151,13 +151,18 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label>Harga</label>
-                                        <input type="number" name="harga" class="form-control">
+                                        <label>Harga Satuan</label>
+                                        <input type="number" id="harga" name="harga" class="form-control">
                                     </div>
                                     
                                     <div class="form-group">
                                         <label>Jumlah</label>
-                                        <input type="number" name="jumlah" class="form-control">
+                                        <input type="number" id="jumlah" name="jumlah" class="form-control">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Harga Total</label>
+                                        <input type="number" id="harga_total" class="form-control" disabled>
                                     </div>
 
                                     <div class="form-group"> <!-- Date input -->
@@ -204,47 +209,65 @@
                                 <div class="modal-body">
                                     <div class="form-group">
                                         <label for="nama_pelanggan">Nama Pelanggan</label>
-                                        <select class="form-control" id="nama_pelanggan">
-                                            <option>Arif</option>
-                                            <option>Naufal</option>
-                                            <option>Farhan</option>
-                                            <option>Fajar</option>
-                                            <option>Gitri</option>
+                                        <select class="form-control" id="nama_pelanggan" name="pelanggan">
+                                            <?php
+                                                $query = mysqli_query($koneksi, "SELECT * FROM pelanggan");
+                                                foreach($query as $pelanggan) :
+                                            ?>
+                                            <option value="<?php echo $pelanggan['id_pelanggan'] ?>"><?php echo $pelanggan['nama_pelanggan']; ?></option>
+                                            <?php endforeach; ?>
                                         </select>
                                     </div>
+
                                     <div class="form-group">
                                         <label for="jenis_pesanan">Jenis Pesanan</label>
-                                        <select class="form-control" id="jenis_pesanan">
-                                            <option>Kameja</option>
-                                            <option>Celana</option>
+                                        <select class="form-control" id="jenis_pesanan" name="jenis_pesanan">
+                                            <option value="Kemeja">Kemeja</option>
+                                            <option value="Celana">Celana</option>
                                         </select>
                                     </div>
+
                                     <div class="form-group">
                                         <label for="ukuran">Ukuran</label>
-                                        <select class="form-control" id="ukuran">
-                                            <option>S</option>
-                                            <option>M</option>
-                                            <option>L</option>
-                                            <option>XL</option>
-                                            <option>XXL</option>
-                                            <option>XXXL</option>
+                                        <select class="form-control" id="ukuran" name="ukuran">
+                                            <option value="S">S</option>
+                                            <option value="M">M</option>
+                                            <option value="L">L</option>
+                                            <option value="XL">XL</option>
+                                            <option value="XXL">XXL</option>
+                                            <option value="XXXL">XXXL</option>
                                         </select>
                                     </div>
+
                                     <div class="form-group">
                                         <label>Harga</label>
-                                        <input type="text" name="harga" class="form-control" placeholder="Harga">
+                                        <input type="number" name="harga" class="form-control">
                                     </div>
+                                    
                                     <div class="form-group">
-                                        <label class="control-label" for="tanggal_pesanan">Tanggal Pesanan</label>
-                                        <input class="form-control" id="tanggal_pesanan" name="tanggal_pesanan" placeholder="MM/DD/YYY" type="date" />
+                                        <label>Jumlah</label>
+                                        <input type="number" name="jumlah" class="form-control">
                                     </div>
+
+                                    <div class="form-group"> <!-- Date input -->
+                                        <label class="control-label" for="tanggal_pesanan">Tanggal Pesanan</label>
+                                        <input class="form-control" id="tanggal_pesanan" name="tanggal_pesanan" placeholder="MM/DD/YYYY" type="date" />
+                                    </div>
+
+                                    <div class="form-group"> <!-- Date input -->
+                                        <label class="control-label" for="tanggal_selesai">Tanggal Selesai</label>
+                                        <input class="form-control" id="tanggal_selesai" name="tanggal_selesai" placeholder="MM/DD/YYYY" type="date" />
+                                    </div>
+
                                     <div class="form-group">
                                         <label for="status_pesanan">Status Pesanan</label>
-                                        <select class="form-control" id="status_pesanan">
-                                            <option>Selesai</option>
-                                            <option>Belum Selesai</option>
+                                        <select class="form-control" id="status_pesanan" name="status_pesanan">
+                                            <option value="Belum">Belum Selesai</option>
+                                            <option value="Proses">Proses</option>
+                                            <option value="Selesai">Selesai</option>
                                         </select>
                                     </div>
+
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
@@ -269,7 +292,7 @@
                             <div class="modal-body">Apa kamu yakin ingin menghapus data ini?</div>
                             <div class="modal-footer">
                                 <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
-                                <a class="btn btn-danger" href="pesanan.php">Ya</a>
+                                <a class="btn btn-danger" href="">Ya</a>
                             </div>
                         </div>
                     </div>
@@ -298,7 +321,8 @@
                                                     <th>Nama Pelanggan</th>
                                                     <th>Jenis Pesanan</th>
                                                     <th>Ukuran</th>
-                                                    <th>Harga</th>
+                                                    <th>Jumlah</th>
+                                                    <th>Harga Total</th>
                                                     <th>Tanggal Pesanan</th>
                                                     <th>Status Pesanan</th>
                                                     <th>Aksi</th>
@@ -306,23 +330,31 @@
                                             </thead>
                                             <tbody>
                                                 <?php
-                                                    $query = mysqli_query($koneksi, "SELECT * FROM pesanan");
+                                                    $query = mysqli_query($koneksi,
+                                                        "SELECT pesanan.*, pelanggan.nama_pelanggan
+                                                        FROM pesanan
+                                                        INNER JOIN pelanggan
+                                                        ON pesanan.id_pelanggan = pelanggan.id_pelanggan");
                                                     $i = 1;
                                                     foreach($query as $pesanan) :
                                                 ?>
 
                                                 <tr>
-                                                    <td>1</td>
-                                                    <td>Tiger Nixon</td>
-                                                    <td>Kameja</td>
-                                                    <td>S</td>
-                                                    <td>50.000</td>
-                                                    <td>2023/08/20</td>
-                                                    <td>Selesai</td>
+                                                    <td><?php echo $i ?></td>
+                                                    <td><?php echo $pesanan['nama_pelanggan']; ?></td>
+                                                    <td><?php echo $pesanan['jenis_pesanan']; ?></td>
+                                                    <td><?php echo $pesanan['ukuran']; ?></td>
+                                                    <td><?php echo $pesanan['jumlah']; ?></td>
+                                                    <td><?php echo $pesanan['harga_total']; ?></td>
+                                                    <td><?php
+                                                        $tanggalPemesanan = strtotime($pesanan['tanggal_pesanan']);
+                                                        echo date('m/d/Y', $tanggalPemesanan);
+                                                    ?></td>
+                                                    <td><?php echo $pesanan['status_pemesanan']; ?></td>
                                                     <td>
-                                                        <a class="btn btn-warning" data-toggle="modal" data-target="#edit_pesanan" href=""><i class="fas fa-edit fa-sm"></i></a>
+                                                        <a class="btn btn-warning" id="edit_button" data-toggle="modal" data-target="#edit_pesanan" data-id="<?php echo $pesanan['id_pesanan'] ?>"><i class="fas fa-edit fa-sm"></i></a>
                                                         &nbsp;
-                                                        <a class="btn btn-danger" data-toggle="modal" data-target="#delete_modal" href=""><i class="fas fa-trash fa-sm"></i></a>
+                                                        <a class="btn btn-danger" id="delete_button" data-toggle="modal" data-target="#delete_modal" data-id="<?php echo $pesanan['id_pesanan'] ?>"><i class="fas fa-trash fa-sm"></i></a>
                                                     </td>
                                                 </tr>
 
@@ -376,29 +408,46 @@
                     <div class="modal-body">Apa kamu yakin ingin keluar?</div>
                     <div class="modal-footer">
                         <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
-                        <a class="btn btn-danger" href="login.php">Keluar</a>
+                        <a class="btn btn-danger" href="backend/logoutBackend.php">Keluar</a>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Bootstrap core JavaScript-->
-        <script src="vendor/jquery/jquery.min.js"></script>
-        <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-        <!-- Core plugin JavaScript-->
-        <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-
-        <!-- Custom scripts for all pages-->
-        <script src="js/sb-admin-2.min.js"></script>
-
-        <!-- Page level plugins -->
-        <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
-
-        <!-- Page level custom scripts -->
-        <script src="js/demo/datatables-demo.js"></script>
-        <script src="vendor/datatables/jquery.dataTables.min.js"></script>
-        <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+        <!-- Script Edit & Delete Modal -->
+        <script type="text/javascript">
+            $('#edit_button').click(function(e) {
+                id = $(this).attr('data-id');
+                $.ajax({
+                    type: "POST",
+                    url: "modals/pesananEdit.php",
+                    data: {id:id},
+                    success: function(response) {
+                        $('#edit_pesanan').html(response);
+                    }
+                });
+            });
+            // $('#delete_button').click(function(e) {
+            //     id = $(this).attr('data-id');
+            //     $.ajax({
+            //         type: "POST",
+            //         url: "modals/pelangganHapus.php",
+            //         data: {id:id},
+            //         success: function(response) {
+            //             $('#delete_modal').html(response);
+            //         }
+            //     });
+            // });
+        </script>
+        
+        <!-- Script Harga Total -->
+        <script type="text/javascript">
+            $('#harga, #jumlah').change(function(e) {
+                $harga = $('#harga').val();
+                $jumlah = $('#jumlah').val();
+                $('#harga_total').val($harga * $jumlah);
+            });
+        </script>
 </body>
 
 </html>
