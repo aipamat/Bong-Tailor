@@ -292,7 +292,7 @@
                             <div class="modal-body">Apa kamu yakin ingin menghapus data ini?</div>
                             <div class="modal-footer">
                                 <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
-                                <a class="btn btn-danger" href="">Ya</a>
+                                <a class="btn btn-danger" href="">Yaz</a>
                             </div>
                         </div>
                     </div>
@@ -352,9 +352,9 @@
                                                     ?></td>
                                                     <td><?php echo $pesanan['status_pemesanan']; ?></td>
                                                     <td>
-                                                        <a class="btn btn-warning" id="edit_button" data-toggle="modal" data-target="#edit_pesanan" data-id="<?php echo $pesanan['id_pesanan'] ?>"><i class="fas fa-edit fa-sm"></i></a>
+                                                        <a class="btn btn-warning edit_button" data-toggle="modal" data-target="#edit_pesanan" data-id="<?php echo $pesanan['id_pesanan'] ?>"><i class="fas fa-edit fa-sm"></i></a>
                                                         &nbsp;
-                                                        <a class="btn btn-danger" id="delete_button" data-toggle="modal" data-target="#delete_modal" data-id="<?php echo $pesanan['id_pesanan'] ?>"><i class="fas fa-trash fa-sm"></i></a>
+                                                        <a class="btn btn-danger delete_button" data-toggle="modal" data-target="#delete_modal" data-id="<?php echo $pesanan['id_pesanan'] ?>"><i class="fas fa-trash fa-sm"></i></a>
                                                     </td>
                                                 </tr>
 
@@ -416,28 +416,28 @@
 
         <!-- Script Edit & Delete Modal -->
         <script type="text/javascript">
-            $('#edit_button').click(function(e) {
-                id = $(this).attr('data-id');
+            $('.edit_button').click(function(e) {
+                $id = $(this).attr('data-id');
                 $.ajax({
                     type: "POST",
                     url: "modals/pesananEdit.php",
-                    data: {id:id},
+                    data: {id:$id},
                     success: function(response) {
                         $('#edit_pesanan').html(response);
                     }
                 });
             });
-            // $('#delete_button').click(function(e) {
-            //     id = $(this).attr('data-id');
-            //     $.ajax({
-            //         type: "POST",
-            //         url: "modals/pelangganHapus.php",
-            //         data: {id:id},
-            //         success: function(response) {
-            //             $('#delete_modal').html(response);
-            //         }
-            //     });
-            // });
+            $('.delete_button').click(function(e) {
+                $id = $(this).attr('data-id');
+                $.ajax({
+                    type: "POST",
+                    url: "modals/pesananHapus.php",
+                    data: {id:$id},
+                    success: function(response) {
+                        $('#delete_modal').html(response);
+                    }
+                });
+            });
         </script>
         
         <!-- Script Harga Total -->

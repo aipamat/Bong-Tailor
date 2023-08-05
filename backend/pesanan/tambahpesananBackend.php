@@ -13,7 +13,7 @@
     $tanggal_selesai = $_POST['tanggal_selesai'];
     $status_pemesanan = $_POST['status_pesanan'];
 
-    $query = mysqli_query($koneksi, "INSERT INTO pesanan (id_admin, id_pelanggan, jenis_pesanan, ukuran, harga, jumlah, tanggal_pesanan, tanggal_selesai, status_pemesanan) VALUES ('$id_admin', '$id_pelanggan', '$jenis_pesanan', '$ukuran', '$harga', '$jumlah', '$tanggal_pesanan', '$tanggal_selesai', '$status_pemesanan')");
+    $query = mysqli_query($koneksi, "INSERT INTO pesanan (id_admin, id_pelanggan, jenis_pesanan, ukuran, harga, jumlah, harga_total, tanggal_pesanan, tanggal_selesai, status_pemesanan) VALUES ('$id_admin', '$id_pelanggan', '$jenis_pesanan', '$ukuran', '$harga', '$jumlah', '$harga_total', '$tanggal_pesanan', '$tanggal_selesai', '$status_pemesanan')");
 
     header("Location: ../../pesanan.php");
 
