@@ -10,10 +10,10 @@
     <title>Bong Tailor - Pelanggan</title>
 
     <?php
-        include_once('head/assets.php');
-        include_once('head/koneksi.php');
-        include_once('head/session.php');
-        if(!$_SESSION['logged_in']) header('Location: login.php');
+    include_once('head/assets.php');
+    include_once('head/koneksi.php');
+    include_once('head/session.php');
+    if (!$_SESSION['logged_in']) header('Location: login.php');
     ?>
 </head>
 
@@ -94,10 +94,10 @@
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">
 
                                     <?php
-                                        $id_admin = $_SESSION['id_admin'];
-                                        $query = mysqli_query($koneksi, "SELECT * FROM admin WHERE id_admin = '$id_admin'");
-                                        $query = mysqli_fetch_array($query);
-                                        echo($query['nama_admin']);
+                                    $id_admin = $_SESSION['id_admin'];
+                                    $query = mysqli_query($koneksi, "SELECT * FROM admin WHERE id_admin = '$id_admin'");
+                                    $query = mysqli_fetch_array($query);
+                                    echo ($query['nama_admin']);
                                     ?>
 
                                 </span>
@@ -211,6 +211,19 @@
                     <div class="row">
                         <!-- Begin Page Content -->
                         <div class="container-fluid">
+                            <?php
+                            if (isset($_SESSION['status'])) {
+                            ?>
+                                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                    <?php echo $_SESSION['status']; ?>
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                            <?php
+                                unset($_SESSION['status']);
+                            }
+                            ?>
                             <!-- Page Heading -->
                             <h1 class="h3 mb-2 text-gray-900">Pelanggan</h1>
 
@@ -232,28 +245,28 @@
                                             </thead>
                                             <tbody>
 
-                                            <?php
+                                                <?php
                                                 $query = mysqli_query($koneksi, "SELECT * FROM pelanggan");
                                                 $i = 1;
-                                                foreach($query as $pelanggan) :
-                                            ?>
+                                                foreach ($query as $pelanggan) :
+                                                ?>
 
-                                                <tr>
-                                                    <td> <?php echo $i; ?> </td>
-                                                    <td> <?php echo $pelanggan['nama_pelanggan']; ?> </td>
-                                                    <td> <?php echo $pelanggan['no_telepon']; ?> </td>
-                                                    <td> <?php echo $pelanggan['alamat']; ?> </td>
-                                                    <td>
-                                                        <a class="btn btn-warning edit_button" data-toggle="modal" data-target="#edit_pelanggan" data-id="<?php echo $pelanggan['id_pelanggan'] ?>"><i class="fas fa-edit fa-sm"></i></a>
-                                                        &nbsp;
-                                                        <a class="btn btn-danger delete_button"data-toggle="modal" data-target="#delete_pelanggan" data-id="<?php echo $pelanggan['id_pelanggan'] ?>"><i class="fas fa-trash fa-sm"></i></a>
-                                                    </td>
-                                                </tr>
+                                                    <tr>
+                                                        <td> <?php echo $i; ?> </td>
+                                                        <td> <?php echo $pelanggan['nama_pelanggan']; ?> </td>
+                                                        <td> <?php echo $pelanggan['no_telepon']; ?> </td>
+                                                        <td> <?php echo $pelanggan['alamat']; ?> </td>
+                                                        <td>
+                                                            <a class="btn btn-warning edit_button" data-toggle="modal" data-target="#edit_pelanggan" data-id="<?php echo $pelanggan['id_pelanggan'] ?>"><i class="fas fa-edit fa-sm"></i></a>
+                                                            &nbsp;
+                                                            <a class="btn btn-danger delete_button" data-toggle="modal" data-target="#delete_pelanggan" data-id="<?php echo $pelanggan['id_pelanggan'] ?>"><i class="fas fa-trash fa-sm"></i></a>
+                                                        </td>
+                                                    </tr>
 
-                                            <?php
-                                                $i++;
+                                                <?php
+                                                    $i++;
                                                 endforeach;
-                                            ?>
+                                                ?>
 
                                             </tbody>
                                         </table>
@@ -314,7 +327,9 @@
                 $.ajax({
                     type: "POST",
                     url: "modals/pelangganEdit.php",
-                    data: {id:$id},
+                    data: {
+                        id: $id
+                    },
                     success: function(response) {
                         $('#edit_pelanggan').html(response);
                     }
@@ -325,7 +340,9 @@
                 $.ajax({
                     type: "POST",
                     url: "modals/pelangganHapus.php",
-                    data: {id:$id},
+                    data: {
+                        id: $id
+                    },
                     success: function(response) {
                         $('#delete_pelanggan').html(response);
                     }

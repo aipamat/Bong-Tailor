@@ -10,10 +10,10 @@
     <title>Bong Tailor - Pesanan</title>
 
     <?php
-        include_once('head/assets.php');
-        include_once('head/koneksi.php');
-        include_once('head/session.php');
-        if(!$_SESSION['logged_in']) header('Location: login.php');
+    include_once('head/assets.php');
+    include_once('head/koneksi.php');
+    include_once('head/session.php');
+    if (!$_SESSION['logged_in']) header('Location: login.php');
     ?>
 </head>
 
@@ -94,10 +94,10 @@
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">
 
                                     <?php
-                                        $id_admin = $_SESSION['id_admin'];
-                                        $query = mysqli_query($koneksi, "SELECT * FROM admin WHERE id_admin = '$id_admin'");
-                                        $query = mysqli_fetch_array($query);
-                                        echo($query['nama_admin']);
+                                    $id_admin = $_SESSION['id_admin'];
+                                    $query = mysqli_query($koneksi, "SELECT * FROM admin WHERE id_admin = '$id_admin'");
+                                    $query = mysqli_fetch_array($query);
+                                    echo ($query['nama_admin']);
                                     ?>
 
                                 </span>
@@ -131,10 +131,10 @@
                                         <label for="nama_pelanggan">Nama Pelanggan</label>
                                         <select class="form-control" id="nama_pelanggan" name="pelanggan">
                                             <?php
-                                                $query = mysqli_query($koneksi, "SELECT * FROM pelanggan");
-                                                foreach($query as $pelanggan) :
+                                            $query = mysqli_query($koneksi, "SELECT * FROM pelanggan");
+                                            foreach ($query as $pelanggan) :
                                             ?>
-                                            <option value="<?php echo $pelanggan['id_pelanggan'] ?>"><?php echo $pelanggan['nama_pelanggan']; ?></option>
+                                                <option value="<?php echo $pelanggan['id_pelanggan'] ?>"><?php echo $pelanggan['nama_pelanggan']; ?></option>
                                             <?php endforeach; ?>
                                         </select>
                                     </div>
@@ -163,7 +163,7 @@
                                         <label>Harga Satuan</label>
                                         <input type="number" id="harga" name="harga" class="form-control">
                                     </div>
-                                    
+
                                     <div class="form-group">
                                         <label>Jumlah</label>
                                         <input type="number" id="jumlah" name="jumlah" class="form-control">
@@ -220,10 +220,10 @@
                                         <label for="nama_pelanggan">Nama Pelanggan</label>
                                         <select class="form-control" id="nama_pelanggan" name="pelanggan">
                                             <?php
-                                                $query = mysqli_query($koneksi, "SELECT * FROM pelanggan");
-                                                foreach($query as $pelanggan) :
+                                            $query = mysqli_query($koneksi, "SELECT * FROM pelanggan");
+                                            foreach ($query as $pelanggan) :
                                             ?>
-                                            <option value="<?php echo $pelanggan['id_pelanggan'] ?>"><?php echo $pelanggan['nama_pelanggan']; ?></option>
+                                                <option value="<?php echo $pelanggan['id_pelanggan'] ?>"><?php echo $pelanggan['nama_pelanggan']; ?></option>
                                             <?php endforeach; ?>
                                         </select>
                                     </div>
@@ -252,7 +252,7 @@
                                         <label>Harga</label>
                                         <input type="number" name="harga" class="form-control">
                                     </div>
-                                    
+
                                     <div class="form-group">
                                         <label>Jumlah</label>
                                         <input type="number" name="jumlah" class="form-control">
@@ -315,7 +315,21 @@
                         <!-- Begin Page Content -->
                         <div class="container-fluid">
                             <!-- Page Heading -->
+                            <?php
+                            if (isset($_SESSION['status'])) {
+                            ?>
+                                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                    <?php echo $_SESSION['status']; ?>
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                            <?php
+                                unset($_SESSION['status']);
+                            }
+                            ?>
                             <h1 class="h3 mb-2 text-gray-900">Pesanan</h1>
+
 
                             <button type="button" class="btn btn-success btn-lg btn-block mb-2" data-toggle="modal" data-target="#tambah_pesanan">Tambah Pesanan</button>
 
@@ -339,40 +353,42 @@
                                             </thead>
                                             <tbody>
                                                 <?php
-                                                    $query = mysqli_query($koneksi,
-                                                        "SELECT pesanan.*, pelanggan.nama_pelanggan
+                                                $query = mysqli_query(
+                                                    $koneksi,
+                                                    "SELECT pesanan.*, pelanggan.nama_pelanggan
                                                         FROM pesanan
                                                         INNER JOIN pelanggan
-                                                        ON pesanan.id_pelanggan = pelanggan.id_pelanggan");
-                                                    $i = 1;
-                                                    foreach($query as $pesanan) :
+                                                        ON pesanan.id_pelanggan = pelanggan.id_pelanggan"
+                                                );
+                                                $i = 1;
+                                                foreach ($query as $pesanan) :
                                                 ?>
 
-                                                <tr>
-                                                    <td><?php echo $i ?></td>
-                                                    <td><?php echo $pesanan['nama_pelanggan']; ?></td>
-                                                    <td><?php echo $pesanan['jenis_pesanan']; ?></td>
-                                                    <td><?php echo $pesanan['ukuran']; ?></td>
-                                                    <td><?php echo $pesanan['jumlah']; ?></td>
-                                                    <td><?php
-                                                        $harga_total = $pesanan['harga_total'];
-                                                        echo "Rp ".number_format($harga_total, 0, ",", ".");
-                                                    ?></td>
-                                                    <td><?php
-                                                        $tanggalPemesanan = strtotime($pesanan['tanggal_pesanan']);
-                                                        echo date('m/d/Y', $tanggalPemesanan);
-                                                    ?></td>
-                                                    <td><?php echo $pesanan['status_pemesanan']; ?></td>
-                                                    <td>
-                                                        <a class="btn btn-warning edit_button" data-toggle="modal" data-target="#edit_pesanan" data-id="<?php echo $pesanan['id_pesanan'] ?>"><i class="fas fa-edit fa-sm"></i></a>
-                                                        &nbsp;
-                                                        <a class="btn btn-danger delete_button" data-toggle="modal" data-target="#delete_modal" data-id="<?php echo $pesanan['id_pesanan'] ?>"><i class="fas fa-trash fa-sm"></i></a>
-                                                    </td>
-                                                </tr>
+                                                    <tr>
+                                                        <td><?php echo $i ?></td>
+                                                        <td><?php echo $pesanan['nama_pelanggan']; ?></td>
+                                                        <td><?php echo $pesanan['jenis_pesanan']; ?></td>
+                                                        <td><?php echo $pesanan['ukuran']; ?></td>
+                                                        <td><?php echo $pesanan['jumlah']; ?></td>
+                                                        <td><?php
+                                                            $harga_total = $pesanan['harga_total'];
+                                                            echo "Rp " . number_format($harga_total, 0, ",", ".");
+                                                            ?></td>
+                                                        <td><?php
+                                                            $tanggalPemesanan = strtotime($pesanan['tanggal_pesanan']);
+                                                            echo date('m/d/Y', $tanggalPemesanan);
+                                                            ?></td>
+                                                        <td><?php echo $pesanan['status_pemesanan']; ?></td>
+                                                        <td>
+                                                            <a class="btn btn-warning edit_button" data-toggle="modal" data-target="#edit_pesanan" data-id="<?php echo $pesanan['id_pesanan'] ?>"><i class="fas fa-edit fa-sm"></i></a>
+                                                            &nbsp;
+                                                            <a class="btn btn-danger delete_button" data-toggle="modal" data-target="#delete_modal" data-id="<?php echo $pesanan['id_pesanan'] ?>"><i class="fas fa-trash fa-sm"></i></a>
+                                                        </td>
+                                                    </tr>
 
                                                 <?php
                                                     $i++;
-                                                    endforeach;
+                                                endforeach;
                                                 ?>
                                             </tbody>
                                         </table>
@@ -433,7 +449,9 @@
                 $.ajax({
                     type: "POST",
                     url: "modals/pesananEdit.php",
-                    data: {id:$id},
+                    data: {
+                        id: $id
+                    },
                     success: function(response) {
                         $('#edit_pesanan').html(response);
                     }
@@ -444,14 +462,16 @@
                 $.ajax({
                     type: "POST",
                     url: "modals/pesananHapus.php",
-                    data: {id:$id},
+                    data: {
+                        id: $id
+                    },
                     success: function(response) {
                         $('#delete_modal').html(response);
                     }
                 });
             });
         </script>
-        
+
         <!-- Script Harga Total -->
         <script type="text/javascript">
             $('#harga, #jumlah').change(function(e) {
