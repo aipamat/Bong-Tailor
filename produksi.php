@@ -91,7 +91,16 @@
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Admin</span>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">
+
+                                    <?php
+                                        $id_admin = $_SESSION['id_admin'];
+                                        $query = mysqli_query($koneksi, "SELECT * FROM admin WHERE id_admin = '$id_admin'");
+                                        $query = mysqli_fetch_array($query);
+                                        echo($query['nama_admin']);
+                                    ?>
+
+                                </span>
                                 <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
                             </a>
                             <!-- Dropdown - User Information -->
@@ -116,43 +125,36 @@
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
-                            <form action="" method="">
+                            <form action="backend/produksi/tambahproduksiBackend.php" method="post" enctype="multipart/form-data">
                                 <div class="modal-body">
-                                    <form>
-                                        <div class="form-group">
-                                            <label for="foto">Foto Produk</label>
-                                            <input type="file" class="form-control-file" id="foto" class="form-control">
-                                        </div>
-                                    </form>
                                     <div class="form-group">
-                                        <label for="nama_pelanggan">Nama Pelanggan</label>
-                                        <input type="text" id="nama_pelanggan" name="nama_pelanggan" class="form-control">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="jenis_produk">Jenis Produk</label>
-                                        <select class="form-control" id="jenis_produk">
-                                            <option>Kameja</option>
-                                            <option>Celana</option>
+                                        <label for="pesanan">Pesanan</label>
+                                        <select class="form-control" id="pesanan" name="pesanan">
+                                            <?php
+                                                $query = mysqli_query($koneksi,
+                                                    "SELECT pesanan.*, pelanggan.nama_pelanggan
+                                                    FROM pesanan
+                                                    INNER JOIN pelanggan
+                                                    ON pesanan.id_pelanggan = pelanggan.id_pelanggan");
+
+                                                foreach($query as $pesanan) :
+                                                    $tanggalPemesanan = strtotime($pesanan['tanggal_pesanan']);
+                                                    $tanggalPemesanan = date('m/d/Y', $tanggalPemesanan);
+                                                    $pesananString = $pesanan['nama_pelanggan']." - ".$pesanan['jenis_pesanan']." ".$pesanan['ukuran']." - ".$tanggalPemesanan;
+                                            ?>
+                                            <option value="<?php echo $pesanan['id_pesanan'] ?>"><?php echo $pesananString ?></option>
+                                            <?php endforeach; ?>
                                         </select>
                                     </div>
+                                    
                                     <div class="form-group">
-                                        <label for="ukuran">Ukuran</label>
-                                        <select class="form-control" id="ukuran">
-                                            <option>S</option>
-                                            <option>M</option>
-                                            <option>L</option>
-                                            <option>XL</option>
-                                            <option>XXL</option>
-                                            <option>XXXL</option>
-                                        </select>
+                                        <label for="foto">Foto Produk</label>
+                                        <input type="file" class="form-control-file" id="foto" name="foto">
                                     </div>
+
                                     <div class="form-group">
                                         <label for="deskripsi">Deskripsi</label>
                                         <textarea class="form-control" id="deskripsi" name="deskripsi" rows="3"></textarea>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Harga</label>
-                                        <input type="text" name="harga" class="form-control" placeholder="Harga">
                                     </div>
                                 </div>
                                 <div class="modal-footer">
@@ -265,28 +267,48 @@
                                                     <th>No</th>
                                                     <th>Foto</th>
                                                     <th>Nama Pelanggan</th>
+                                                    <th>Tanggal Pesanan</th>
                                                     <th>Jenis Produk</th>
                                                     <th>Ukuran</th>
+                                                    <th>Harga Total</th>
                                                     <th>Deskripsi</th>
-                                                    <th>Harga</th>
                                                     <th>Aksi</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
+                                                <?php
+                                                    $query = mysqli_query($koneksi,
+                                                        "SELECT produksi.*, pesanan.*, pelanggan.nama_pelanggan
+                                                        FROM ((produksi
+                                                        INNER JOIN pesanan ON produksi.id_pesanan = pesanan.id_pesanan)
+                                                        INNER JOIN pelanggan ON pesanan.id_pelanggan = pelanggan.id_pelanggan)");
+                                                    $i = 1;
+                                                    foreach($query as $produksi) :
+                                                ?>
+
                                                 <tr>
-                                                    <td>1</td>
-                                                    <td>Foto</td>
-                                                    <td>Mamat</td>
-                                                    <td>Kameja</td>
-                                                    <td>S</td>
-                                                    <td>Kameja yang didesain dengan kain batik</td>
-                                                    <td>100.000</td>
+                                                    <td><?php echo $i ?></td>
+                                                    <td><img src="<?php echo $produksi['foto']; ?>" width=150/></td>
+                                                    <td><?php echo $produksi['nama_pelanggan']; ?></td>
+                                                    <td><?php
+                                                        $tanggalPemesanan = strtotime($produksi['tanggal_pesanan']);
+                                                        echo date('m/d/Y', $tanggalPemesanan);
+                                                    ?></td>
+                                                    <td><?php echo $produksi['jenis_pesanan']; ?></td>
+                                                    <td><?php echo $produksi['ukuran']; ?></td>
+                                                    <td><?php
+                                                        $harga_total = $produksi['harga_total'];
+                                                        echo "Rp ".number_format($harga_total, 0, ",", ".");
+                                                    ?></td>
+                                                    <td><?php echo $produksi['deskripsi']; ?></td>
                                                     <td>
-                                                        <a class="btn btn-warning" data-toggle="modal" data-target="#edit_produksi" href=""><i class="fas fa-edit fa-sm"></i></a>
+                                                        <!--a class="btn btn-warning edit_button" data-toggle="modal" data-target="#edit_produksi" data-id="<?php echo $produksi['id_produksi']; ?>"><i class="fas fa-edit fa-sm"></i></a-->
                                                         &nbsp;
-                                                        <a class="btn btn-danger" data-toggle="modal" data-target="#delete_modal" href=""><i class="fas fa-trash fa-sm"></i></a>
+                                                        <a class="btn btn-danger delete_button" data-toggle="modal" data-target="#delete_modal" data-id="<?php echo $produksi['id_produksi']; ?>"><i class="fas fa-trash fa-sm"></i></a>
                                                     </td>
                                                 </tr>
+
+                                                <?php endforeach; ?>
                                             </tbody>
                                         </table>
                                     </div>
@@ -333,11 +355,37 @@
                     <div class="modal-body">Apa kamu yakin ingin keluar?</div>
                     <div class="modal-footer">
                         <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
-                        <a class="btn btn-danger" href="login.php">Keluar</a>
+                        <a class="btn btn-danger" href="backend/logoutBackend.php">Keluar</a>
                     </div>
                 </div>
             </div>
         </div>
+
+        <!-- Script Edit & Delete Modal -->
+        <script type="text/javascript">
+            $('.edit_button').click(function(e) {
+                $id = $(this).attr('data-id');
+                $.ajax({
+                    type: "POST",
+                    url: "modals/produksiEdit.php",
+                    data: {id:$id},
+                    success: function(response) {
+                        $('#edit_produksi').html(response);
+                    }
+                });
+            });
+            $('.delete_button').click(function(e) {
+                $id = $(this).attr('data-id');
+                $.ajax({
+                    type: "POST",
+                    url: "modals/produksiHapus.php",
+                    data: {id:$id},
+                    success: function(response) {
+                        $('#delete_modal').html(response);
+                    }
+                });
+            });
+        </script>
 
 </body>
 
