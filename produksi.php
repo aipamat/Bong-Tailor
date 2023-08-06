@@ -7,13 +7,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>Bong Tailor - Riwayat Pesanan</title>
+    <title>Bong Tailor - Produksi</title>
 
     <?php
-        include_once('head/assets.php');
-        include_once('head/koneksi.php');
-        include_once('head/session.php');
-        if(!$_SESSION['logged_in']) header('Location: login.php');
+    include_once('head/assets.php');
+    include_once('head/koneksi.php');
+    include_once('head/session.php');
+    if (!$_SESSION['logged_in']) header('Location: login.php');
     ?>
 </head>
 
@@ -66,16 +66,13 @@
             <li class="nav-item active">
                 <a class="nav-link" href="#">
                     <i class="fas fa-table fa-lg"></i>
-                    <span>Riwayat Pesanan</span></a>
+                    <span>Produksi</span></a>
             </li>
 
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
 
             <!-- Sidebar Toggler (Sidebar) -->
-            <div class="text-center d-none d-md-inline">
-                <button class="rounded-circle border-0" id="sidebarToggle"></button>
-            </div>
         </ul>
         <!-- End of Sidebar -->
 
@@ -94,14 +91,14 @@
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">
 
                                     <?php
-                                        $id_admin = $_SESSION['id_admin'];
-                                        $query = mysqli_query($koneksi, "SELECT * FROM admin WHERE id_admin = '$id_admin'");
-                                        $query = mysqli_fetch_array($query);
-                                        echo($query['nama_admin']);
+                                    $id_admin = $_SESSION['id_admin'];
+                                    $query = mysqli_query($koneksi, "SELECT * FROM admin WHERE id_admin = '$id_admin'");
+                                    $query = mysqli_fetch_array($query);
+                                    echo ($query['nama_admin']);
                                     ?>
 
                                 </span>
-                                <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
+                                <img class="img-profile rounded-circle" src="img/user.svg">
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
@@ -120,7 +117,7 @@
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="tambah_produksi">Tambah Riwayat Pesanan</h5>
+                                <h5 class="modal-title" id="tambah_produksi">Tambah Produksi</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
@@ -131,22 +128,24 @@
                                         <label for="pesanan">Pesanan</label>
                                         <select class="form-control" id="pesanan" name="pesanan">
                                             <?php
-                                                $query = mysqli_query($koneksi,
-                                                    "SELECT pesanan.*, pelanggan.nama_pelanggan
+                                            $query = mysqli_query(
+                                                $koneksi,
+                                                "SELECT pesanan.*, pelanggan.nama_pelanggan
                                                     FROM pesanan
                                                     INNER JOIN pelanggan
-                                                    ON pesanan.id_pelanggan = pelanggan.id_pelanggan");
+                                                    ON pesanan.id_pelanggan = pelanggan.id_pelanggan"
+                                            );
 
-                                                foreach($query as $pesanan) :
-                                                    $tanggalPemesanan = strtotime($pesanan['tanggal_pesanan']);
-                                                    $tanggalPemesanan = date('m/d/Y', $tanggalPemesanan);
-                                                    $pesananString = $pesanan['nama_pelanggan']." - ".$pesanan['jenis_pesanan']." ".$pesanan['ukuran']." - ".$tanggalPemesanan;
+                                            foreach ($query as $pesanan) :
+                                                $tanggalPemesanan = strtotime($pesanan['tanggal_pesanan']);
+                                                $tanggalPemesanan = date('m/d/Y', $tanggalPemesanan);
+                                                $pesananString = $pesanan['nama_pelanggan'] . " - " . $pesanan['jenis_pesanan'] . " " . $pesanan['ukuran'] . " - " . $tanggalPemesanan;
                                             ?>
-                                            <option value="<?php echo $pesanan['id_pesanan'] ?>"><?php echo $pesananString ?></option>
+                                                <option value="<?php echo $pesanan['id_pesanan'] ?>"><?php echo $pesananString ?></option>
                                             <?php endforeach; ?>
                                         </select>
                                     </div>
-                                    
+
                                     <div class="form-group">
                                         <label for="foto">Foto Produk</label>
                                         <input type="file" class="form-control-file" id="foto" name="foto">
@@ -252,10 +251,23 @@
                     <div class="row">
                         <!-- Begin Page Content -->
                         <div class="container-fluid">
+                            <?php
+                            if (isset($_SESSION['status'])) {
+                            ?>
+                                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                    <?php echo $_SESSION['status']; ?>
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                            <?php
+                                unset($_SESSION['status']);
+                            }
+                            ?>
                             <!-- Page Heading -->
-                            <h1 class="h3 mb-2 text-gray-900">Riwayat Pesanan</h1>
+                            <h1 class="h3 mb-2 text-gray-900">Produksi</h1>
 
-                            <button type="button" class="btn btn-success btn-lg btn-block mb-2" data-toggle="modal" data-target="#tambah_produksi">Tambah Riwayat Pesanan</button>
+                            <button type="button" class="btn btn-success btn-lg btn-block mb-2" data-toggle="modal" data-target="#tambah_produksi">Tambah Produksi</button>
 
                             <!-- DataTales Example -->
                             <div class="card shadow mb-4">
@@ -277,36 +289,38 @@
                                             </thead>
                                             <tbody>
                                                 <?php
-                                                    $query = mysqli_query($koneksi,
-                                                        "SELECT produksi.*, pesanan.*, pelanggan.nama_pelanggan
+                                                $query = mysqli_query(
+                                                    $koneksi,
+                                                    "SELECT produksi.*, pesanan.*, pelanggan.nama_pelanggan
                                                         FROM ((produksi
                                                         INNER JOIN pesanan ON produksi.id_pesanan = pesanan.id_pesanan)
-                                                        INNER JOIN pelanggan ON pesanan.id_pelanggan = pelanggan.id_pelanggan)");
-                                                    $i = 1;
-                                                    foreach($query as $produksi) :
+                                                        INNER JOIN pelanggan ON pesanan.id_pelanggan = pelanggan.id_pelanggan)"
+                                                );
+                                                $i = 1;
+                                                foreach ($query as $produksi) :
                                                 ?>
 
-                                                <tr>
-                                                    <td><?php echo $i ?></td>
-                                                    <td><img src="<?php echo $produksi['foto']; ?>" width=150/></td>
-                                                    <td><?php echo $produksi['nama_pelanggan']; ?></td>
-                                                    <td><?php
-                                                        $tanggalPemesanan = strtotime($produksi['tanggal_pesanan']);
-                                                        echo date('m/d/Y', $tanggalPemesanan);
-                                                    ?></td>
-                                                    <td><?php echo $produksi['jenis_pesanan']; ?></td>
-                                                    <td><?php echo $produksi['ukuran']; ?></td>
-                                                    <td><?php
-                                                        $harga_total = $produksi['harga_total'];
-                                                        echo "Rp ".number_format($harga_total, 0, ",", ".");
-                                                    ?></td>
-                                                    <td><?php echo $produksi['deskripsi']; ?></td>
-                                                    <td>
-                                                        <!--a class="btn btn-warning edit_button" data-toggle="modal" data-target="#edit_produksi" data-id="<?php echo $produksi['id_produksi']; ?>"><i class="fas fa-edit fa-sm"></i></a-->
-                                                        &nbsp;
-                                                        <a class="btn btn-danger delete_button" data-toggle="modal" data-target="#delete_modal" data-id="<?php echo $produksi['id_produksi']; ?>"><i class="fas fa-trash fa-sm"></i></a>
-                                                    </td>
-                                                </tr>
+                                                    <tr>
+                                                        <td><?php echo $i ?></td>
+                                                        <td><img src="<?php echo $produksi['foto']; ?>" width=150 /></td>
+                                                        <td><?php echo $produksi['nama_pelanggan']; ?></td>
+                                                        <td><?php
+                                                            $tanggalPemesanan = strtotime($produksi['tanggal_pesanan']);
+                                                            echo date('m/d/Y', $tanggalPemesanan);
+                                                            ?></td>
+                                                        <td><?php echo $produksi['jenis_pesanan']; ?></td>
+                                                        <td><?php echo $produksi['ukuran']; ?></td>
+                                                        <td><?php
+                                                            $harga_total = $produksi['harga_total'];
+                                                            echo "Rp " . number_format($harga_total, 0, ",", ".");
+                                                            ?></td>
+                                                        <td><?php echo $produksi['deskripsi']; ?></td>
+                                                        <td>
+                                                            <!--a class="btn btn-warning edit_button" data-toggle="modal" data-target="#edit_produksi" data-id="<?php echo $produksi['id_produksi']; ?>"><i class="fas fa-edit fa-sm"></i></a-->
+                                                            &nbsp;
+                                                            <a class="btn btn-danger delete_button" data-toggle="modal" data-target="#delete_modal" data-id="<?php echo $produksi['id_produksi']; ?>"><i class="fas fa-trash fa-sm"></i></a>
+                                                        </td>
+                                                    </tr>
 
                                                 <?php endforeach; ?>
                                             </tbody>
@@ -368,7 +382,9 @@
                 $.ajax({
                     type: "POST",
                     url: "modals/produksiEdit.php",
-                    data: {id:$id},
+                    data: {
+                        id: $id
+                    },
                     success: function(response) {
                         $('#edit_produksi').html(response);
                     }
@@ -379,7 +395,9 @@
                 $.ajax({
                     type: "POST",
                     url: "modals/produksiHapus.php",
-                    data: {id:$id},
+                    data: {
+                        id: $id
+                    },
                     success: function(response) {
                         $('#delete_modal').html(response);
                     }

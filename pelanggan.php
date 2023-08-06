@@ -66,16 +66,13 @@
             <li class="nav-item">
                 <a class="nav-link" href="produksi.php">
                     <i class="fas fa-table fa-lg"></i>
-                    <span>Riwayat Pesanan</span></a>
+                    <span>Produksi</span></a>
             </li>
 
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
 
             <!-- Sidebar Toggler (Sidebar) -->
-            <div class="text-center d-none d-md-inline">
-                <button class="rounded-circle border-0" id="sidebarToggle"></button>
-            </div>
         </ul>
         <!-- End of Sidebar -->
 
@@ -101,7 +98,7 @@
                                     ?>
 
                                 </span>
-                                <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
+                                <img class="img-profile rounded-circle" src="img/user.svg">
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
