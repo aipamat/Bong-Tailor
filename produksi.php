@@ -302,9 +302,9 @@
                                                     ?></td>
                                                     <td><?php echo $produksi['deskripsi']; ?></td>
                                                     <td>
-                                                        <a class="btn btn-warning" id="edit_button" data-toggle="modal" data-target="#edit_produksi" data-id="<?php echo $produksi['id_produksi']; ?>"><i class="fas fa-edit fa-sm"></i></a>
+                                                        <!--a class="btn btn-warning edit_button" data-toggle="modal" data-target="#edit_produksi" data-id="<?php echo $produksi['id_produksi']; ?>"><i class="fas fa-edit fa-sm"></i></a-->
                                                         &nbsp;
-                                                        <a class="btn btn-danger" id="delete_button" data-toggle="modal" data-target="#delete_modal" data-id="<?php echo $produksi['id_produksi']; ?>"><i class="fas fa-trash fa-sm"></i></a>
+                                                        <a class="btn btn-danger delete_button" data-toggle="modal" data-target="#delete_modal" data-id="<?php echo $produksi['id_produksi']; ?>"><i class="fas fa-trash fa-sm"></i></a>
                                                     </td>
                                                 </tr>
 
