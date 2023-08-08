@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 05, 2023 at 04:07 PM
+-- Generation Time: Aug 08, 2023 at 07:12 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -59,7 +59,7 @@ CREATE TABLE `pelanggan` (
 --
 
 INSERT INTO `pelanggan` (`id_pelanggan`, `nama_pelanggan`, `no_telepon`, `alamat`) VALUES
-(2, 'Arif Rahmat', '08123456789', 'Jl. Kuda no. 15');
+(5, 'Farhan', '08123456789', 'Jl. A NO. 1');
 
 -- --------------------------------------------------------
 
@@ -86,7 +86,7 @@ CREATE TABLE `pesanan` (
 --
 
 INSERT INTO `pesanan` (`id_pesanan`, `id_admin`, `id_pelanggan`, `jenis_pesanan`, `ukuran`, `jumlah`, `harga`, `harga_total`, `tanggal_pesanan`, `tanggal_selesai`, `status_pemesanan`) VALUES
-(3, 1, 2, 'Kemeja', 'S', 2, 200000, 0, '2023-08-02 00:00:00', '0000-00-00 00:00:00', 'Belum');
+(7, 1, 5, 'Kemeja', 'L', 1, 100000, 100000, '2023-08-08 00:00:00', '0000-00-00 00:00:00', 'Selesai');
 
 -- --------------------------------------------------------
 
@@ -97,9 +97,16 @@ INSERT INTO `pesanan` (`id_pesanan`, `id_admin`, `id_pelanggan`, `jenis_pesanan`
 CREATE TABLE `produksi` (
   `id_produksi` int(11) NOT NULL,
   `id_pesanan` int(11) NOT NULL,
-  `foto` varchar(30) NOT NULL,
+  `foto` varchar(100) NOT NULL,
   `deskripsi` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `produksi`
+--
+
+INSERT INTO `produksi` (`id_produksi`, `id_pesanan`, `foto`, `deskripsi`) VALUES
+(4, 7, 'img/produksi/08-08-2023-FarhanKemejaL.jpg', 'Kemeja putih tanpa corak');
 
 --
 -- Indexes for dumped tables
@@ -146,19 +153,19 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT for table `pelanggan`
 --
 ALTER TABLE `pelanggan`
-  MODIFY `id_pelanggan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_pelanggan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `pesanan`
 --
 ALTER TABLE `pesanan`
-  MODIFY `id_pesanan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_pesanan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `produksi`
 --
 ALTER TABLE `produksi`
-  MODIFY `id_produksi` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_produksi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Constraints for dumped tables
@@ -168,8 +175,8 @@ ALTER TABLE `produksi`
 -- Constraints for table `pesanan`
 --
 ALTER TABLE `pesanan`
-  ADD CONSTRAINT `pesanan_ibfk_1` FOREIGN KEY (`id_pelanggan`) REFERENCES `pelanggan` (`id_pelanggan`),
-  ADD CONSTRAINT `pesanan_ibfk_3` FOREIGN KEY (`id_admin`) REFERENCES `admin` (`id_admin`);
+  ADD CONSTRAINT `pesanan_ibfk_1` FOREIGN KEY (`id_admin`) REFERENCES `admin` (`id_admin`) ON DELETE CASCADE,
+  ADD CONSTRAINT `pesanan_ibfk_2` FOREIGN KEY (`id_pelanggan`) REFERENCES `pelanggan` (`id_pelanggan`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `produksi`
